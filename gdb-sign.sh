@@ -71,7 +71,7 @@ EOF
 }
 
 sign() {
-    entitlement=$(mktemp)
+    entitlement="$(mktemp)"
     cat - >"$entitlement" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -83,6 +83,7 @@ sign() {
 </plist>
 EOF
     codesign --entitlement "$entitlement" -fs "$CERT" "$(which gdb)"
+    rm "$entitlement"
 }
 
 check_gdb
